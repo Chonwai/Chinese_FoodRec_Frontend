@@ -12,8 +12,14 @@ class Index extends React.Component {
         this.state = {
             cuisines: [],
             tastes: [],
-            ingredients: null,
+            cuisineOption: null,
+            tasteOption: null,
+            ingredientOption: null,
         };
+        this.cuisineCallback = this.cuisineCallback.bind(this);
+        this.tasteCallback = this.tasteCallback.bind(this);
+        this.ingredientCallback = this.ingredientCallback.bind(this);
+        this.search = this.search.bind(this);
     }
     async componentDidMount() {
         let cuisinesRes = await axios.get('http://localhost:3000/api/chinese/cuisines/all');
@@ -22,6 +28,24 @@ class Index extends React.Component {
             cuisines: cuisinesRes.data,
             tastes: tastesRes.data,
         });
+    }
+    cuisineCallback(cuisineOption) {
+        this.setState({
+            cuisineOption: cuisineOption,
+        });
+    }
+    tasteCallback(tasteOption) {
+        this.setState({
+            tasteOption: tasteOption,
+        });
+    }
+    ingredientCallback(ingredientOption) {
+        this.setState({
+            ingredientOption: ingredientOption,
+        });
+    }
+    search(event) {
+        console.log(this.state);
     }
     render() {
         return (
@@ -33,19 +57,26 @@ class Index extends React.Component {
                             label="Cuisines"
                             helper="Please select the cuisine"
                             items={this.state.cuisines.cuisines}
+                            callback={this.cuisineCallback}
                         />
                         <SelectBox
                             label="Tastes"
                             helper="Please select the taste"
-                            items={this.state.tastes.cuisines}
+                            items={this.state.tastes.tastes}
+                            callback={this.tasteCallback}
                         />
-                        <TextField label="Ingredients" helper="Please type the ingredient" />
+                        <TextField
+                            label="Ingredients"
+                            helper="Please type the ingredient"
+                            callback={this.ingredientCallback}
+                        />
                         <Button
                             variant="contained"
                             color="default"
                             className="h-auto"
                             size="large"
                             startIcon={<SearchIcon />}
+                            onClick={this.search}
                         >
                             Search
                         </Button>

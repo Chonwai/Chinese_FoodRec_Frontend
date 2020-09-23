@@ -16,17 +16,22 @@ const useStyles = makeStyles(theme => ({
 
 export default function LayoutTextFields(props) {
     const classes = useStyles();
-
+    const handleChange = event => {
+        if (props.callback) {
+            props.callback(event.target.value);
+        }
+    };
     return (
         <div className={classes.root}>
             <div>
                 <TextField
                     label={props.label}
                     id="margin-normal"
-                    defaultValue="Default Value"
+                    placeholder="例如: 蛋"
                     className={classes.textField}
                     helperText={props.helper}
-                    margin="normal"
+                    margin="dense"
+                    onChange={handleChange}
                 />
             </div>
         </div>

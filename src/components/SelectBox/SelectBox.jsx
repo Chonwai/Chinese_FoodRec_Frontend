@@ -19,14 +19,21 @@ const useStyles = makeStyles(theme => ({
 
 export default function CustomizedSelects(props) {
     const classes = useStyles();
-    const [age, setAge] = React.useState('');
-    const handleChange = event => {
-        setAge(event.target.value);
-    };
+    const [val, setVal] = React.useState('');
     const items = [];
+    const handleChange = event => {
+        setVal(event.target.value);
+        if (props.callback) {
+            props.callback(event.target.value);
+        }
+    };
     if (props.items != null) {
         for (const item of props.items) {
-            items.push(<MenuItem key={item.id}>{item.name}</MenuItem>);
+            items.push(
+                <MenuItem key={item.id} value={item.name}>
+                    {item.name}
+                </MenuItem>
+            );
         }
     }
     return (
@@ -35,7 +42,7 @@ export default function CustomizedSelects(props) {
             <Select
                 labelId="demo-simple-select-helper-label"
                 id="demo-simple-select-helper"
-                value={age}
+                value={val}
                 onChange={handleChange}
             >
                 {items}
