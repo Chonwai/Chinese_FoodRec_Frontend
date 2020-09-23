@@ -5,6 +5,8 @@ import TextField from '../../components/TextField/TextField';
 import SearchIcon from '@material-ui/icons/Search';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
+import DishAPI from '../../apis/DishAPIs';
+import ResultDialog from '../../components/ResultDialog/ResultDialog';
 
 class Index extends React.Component {
     constructor(props) {
@@ -12,9 +14,9 @@ class Index extends React.Component {
         this.state = {
             cuisines: [],
             tastes: [],
-            cuisineOption: null,
-            tasteOption: null,
-            ingredientOption: null,
+            cuisineOption: '',
+            tasteOption: '',
+            ingredientOption: '',
         };
         this.cuisineCallback = this.cuisineCallback.bind(this);
         this.tasteCallback = this.tasteCallback.bind(this);
@@ -44,13 +46,19 @@ class Index extends React.Component {
             ingredientOption: ingredientOption,
         });
     }
-    search(event) {
-        console.log(this.state);
+    async search(event) {
+        const formData = {
+            ingredient: this.state.ingredientOption,
+            chinese_cuisine: this.state.cuisineOption,
+            taste: this.state.tasteOption,
+        };
+        let res = await DishAPI.GetSpecifyDishesByFilter(formData);
+        console.log(res);
     }
     render() {
         return (
-            <div className="Index h-screen w-screen">
-                <div className="flex flex-col justify-center items-center h-full w-full">
+            <div className="Index h-screen w-screen p-4">
+                <div className="filter-container flex flex-col justify-center items-center h-full w-full">
                     <h1 className="font-bold text-4xl">Chinese FoodRec</h1>
                     <div className="flex justify-center items-center">
                         <SelectBox
@@ -81,6 +89,7 @@ class Index extends React.Component {
                             Search
                         </Button>
                     </div>
+                    <ResultDialog></ResultDialog>
                 </div>
             </div>
         );
