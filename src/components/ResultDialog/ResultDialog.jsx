@@ -44,7 +44,7 @@ export default function ResultDialog(props) {
                 aria-describedby="scroll-dialog-description"
                 maxWidth="lg"
             >
-                <DialogTitle id="scroll-dialog-title">Subscribe</DialogTitle>
+                <DialogTitle id="scroll-dialog-title">Results</DialogTitle>
                 <DialogContent dividers={scroll === 'paper'}>
                     <DataTable data={result}></DataTable>
                 </DialogContent>
@@ -53,7 +53,7 @@ export default function ResultDialog(props) {
                         Cancel
                     </Button>
                     <Button onClick={handleClose} color="primary">
-                        Subscribe
+                        OK
                     </Button>
                 </DialogActions>
             </Dialog>
