@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import DishAPI from '../../apis/DishAPIs';
 import ResultDialog from '../../components/ResultDialog/ResultDialog';
+import utils from '../../utils/utils';
 
 class Index extends React.Component {
     constructor(props) {
@@ -14,13 +15,16 @@ class Index extends React.Component {
         this.state = {
             cuisines: [],
             tastes: [],
+            dishes: [],
             cuisineOption: '',
             tasteOption: '',
             ingredientOption: '',
+            isShowResult: false,
         };
         this.cuisineCallback = this.cuisineCallback.bind(this);
         this.tasteCallback = this.tasteCallback.bind(this);
         this.ingredientCallback = this.ingredientCallback.bind(this);
+        this.isShowResultCallback = this.isShowResultCallback.bind(this);
         this.search = this.search.bind(this);
     }
     async componentDidMount() {
@@ -46,6 +50,11 @@ class Index extends React.Component {
             ingredientOption: ingredientOption,
         });
     }
+    isShowResultCallback(isShowResult) {
+        this.setState({
+            isShowResult: isShowResult,
+        });
+    }
     async search(event) {
         const formData = {
             ingredient: this.state.ingredientOption,
@@ -53,7 +62,11 @@ class Index extends React.Component {
             taste: this.state.tasteOption,
         };
         let res = await DishAPI.GetSpecifyDishesByFilter(formData);
-        console.log(res);
+        res = await utils.generateResultList(res);
+        this.setState({
+            dishes: res,
+            isShowResult: true,
+        });
     }
     render() {
         return (
@@ -89,7 +102,11 @@ class Index extends React.Component {
                             Search
                         </Button>
                     </div>
-                    <ResultDialog></ResultDialog>
+                    <ResultDialog
+                        isShow={this.state.isShowResult}
+                        data={this.state.dishes}
+                        callback={this.isShowResultCallback}
+                    ></ResultDialog>
                 </div>
             </div>
         );

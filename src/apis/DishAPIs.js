@@ -9,8 +9,7 @@ class DishAPIs {
                 taste: data.taste,
             },
         });
-        console.log(dishsRes);
-        return dishsRes.data;
+        return dishsRes.data.dishes;
     }
 }
 
