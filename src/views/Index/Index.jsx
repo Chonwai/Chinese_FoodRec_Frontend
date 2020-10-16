@@ -28,11 +28,11 @@ class Index extends React.Component {
         this.search = this.search.bind(this);
     }
     async componentDidMount() {
-        let cuisinesRes = await axios.get('http://localhost:3000/api/chinese/cuisines/all');
-        let tastesRes = await axios.get('http://localhost:3000/api/tastes/all');
+        let cuisinesRes = await axios.get('http://localhost:8001/api/v1/chinese/cuisines/all');
+        let tastesRes = await axios.get('http://localhost:8001/api/v1/tastes/all');
         this.setState({
-            cuisines: cuisinesRes.data,
-            tastes: tastesRes.data,
+            cuisines: cuisinesRes.data.message,
+            tastes: tastesRes.data.message,
         });
     }
     cuisineCallback(cuisineOption) {
@@ -77,13 +77,13 @@ class Index extends React.Component {
                         <SelectBox
                             label="Cuisines"
                             helper="Please select the cuisine"
-                            items={this.state.cuisines.cuisines}
+                            items={this.state.cuisines}
                             callback={this.cuisineCallback}
                         />
                         <SelectBox
                             label="Tastes"
                             helper="Please select the taste"
-                            items={this.state.tastes.tastes}
+                            items={this.state.tastes}
                             callback={this.tasteCallback}
                         />
                         <TextField
