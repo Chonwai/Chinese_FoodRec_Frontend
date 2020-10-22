@@ -9,7 +9,7 @@ class DishAPIs {
                 taste: data.taste,
             },
         });
-        return dishsRes.data.message;
+        return dishsRes;
     }
 }
 

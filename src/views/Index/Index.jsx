@@ -63,7 +63,7 @@ class Index extends React.Component {
             taste: this.state.tasteOption,
         };
         let res = await DishAPI.GetSpecifyDishesByFilter(formData);
-        res = await utils.generateResultList(res);
+        res = await utils.generateResultList(res.data.message);
         this.setState({
             dishes: res,
             isShowResult: true,
