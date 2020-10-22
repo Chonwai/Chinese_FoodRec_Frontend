@@ -4,10 +4,11 @@ import SelectBox from '../../components/SelectBox/SelectBox';
 import TextField from '../../components/TextField/TextField';
 import SearchIcon from '@material-ui/icons/Search';
 import Button from '@material-ui/core/Button';
-import axios from 'axios';
 import DishAPI from '../../apis/DishAPIs';
 import ResultDialog from '../../components/ResultDialog/ResultDialog';
 import utils from '../../utils/utils';
+import TasteAPI from '../../apis/TasteAPI';
+import CuisineAPI from '../../apis/CuisineAPI';
 
 class Index extends React.Component {
     constructor(props) {
@@ -28,8 +29,8 @@ class Index extends React.Component {
         this.search = this.search.bind(this);
     }
     async componentDidMount() {
-        let cuisinesRes = await axios.get('http://localhost:8001/api/v1/chinese/cuisines/all');
-        let tastesRes = await axios.get('http://localhost:8001/api/v1/tastes/all');
+        let cuisinesRes = await CuisineAPI.GetAll();
+        let tastesRes = await TasteAPI.GetAll();
         this.setState({
             cuisines: cuisinesRes.data.message,
             tastes: tastesRes.data.message,
